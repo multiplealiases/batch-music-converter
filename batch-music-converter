@@ -127,8 +127,8 @@ dirlist="$(mktemp)"
 trap 'cleanup' ERR EXIT
 
 find "$input_prefix" -type f -print0 > "$input_filelist"
+< "$input_filelist" cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$output_filelist"
 find "$input_prefix" -type d -print0 | cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$dirlist"
-find "$input_prefix" -type f -print0 | cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$output_filelist"
 
 if false
 then
