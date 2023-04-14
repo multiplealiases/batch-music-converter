@@ -140,7 +140,7 @@ if [[ $interactive == 'y' ]]
 then
     echo 'Your converted music will reside in locations like:'
     parallel -0 echo \{.\}."$extension" :::: <(shuf -zn 5 "$output_filelist")
-    read -rp "Would you like to proceed? (y/N)" response
+    read -rp "Would you like to proceed? (y/N) " response
 
     case "$response" in
         y | Y) echo 'Proceeding...' ;;
