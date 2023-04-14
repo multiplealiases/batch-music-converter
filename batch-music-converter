@@ -74,7 +74,7 @@ function cleanup() {
     rm "$input_filelist" "$output_filelist" "$dirlist"
 }
 
-ARGS="$(getopt --options h, --long help -- "$@")"
+ARGS="$(getopt --options h,b:,c:,e:,i,j:,p: --long help,bitrate:,codec:,extension:,interactive,jobs:,strip: -- "$@")"
 eval set -- "$ARGS"
 while true
 do
