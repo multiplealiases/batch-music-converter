@@ -20,6 +20,7 @@ Defaults shown in [].
 -b, --bitrate        bitrate to convert to [196k]
 -c, --codec          codec to convert to [libopus]
 -e, --extension      file extension [ogg]
+-i, --interactive    interactive confirmation
 -j, --jobs           number of parallel processes [$(nproc)]
 -p, --strip          strip this many path components [1]
 -h, --help           this help
@@ -94,6 +95,10 @@ do
         extension="$2"
         shift 2
         ;;
+    -i | --interactive)
+        interactive="y"
+        shift
+        ;;
     -j | --jobs)
         jobs="$2"
         shift 2
@@ -119,6 +124,7 @@ codec="${codec:-libopus}"
 jobs="${jobs:-$(nproc)}"
 extension="${extension:-ogg}"
 strip="${strip:-1}"
+interactive="${interactive:-n}"
 
 input_filelist="$(mktemp)"
 output_filelist="$(mktemp)"
@@ -130,7 +136,7 @@ find "$input_prefix" -type f -print0 > "$input_filelist"
 < "$input_filelist" cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$output_filelist"
 find "$input_prefix" -type d -print0 | cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$dirlist"
 
-if false
+if [[ $interactive == 'y' ]]
 then
     echo 'Your converted music will reside in locations like:'
     shuf --echo -n 5 < "$output_filelist"
