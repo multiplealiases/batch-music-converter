@@ -50,23 +50,23 @@ EOF
 }
 
 function valid_noclobber() {
-        if [[ -z "$1" ]]
-        then
-            echo 'A second argument (output directory) is needed.'
-            exit 6
-        elif [[ $# -gt 1 ]]
-        then
-            cat << EOF
+    if [[ -z "$1" ]]
+    then
+        echo 'A second argument (output directory) is needed.'
+        exit 6
+    elif [[ $# -gt 1 ]]
+    then
+        cat << EOF
 Edge case: How did more than one arg get into valid_noclobber?
 I saw: $@
 EOF
-            exit 7
-        elif [[ -e "$1" ]]
-        then
-            printf "'%s': file exists\n" "$1"
-            printf "Please move or delete '%s'\n" "$1"
-            exit 8
-        fi
+        exit 7
+    elif [[ -e "$1" ]]
+    then
+        printf "'%s': file exists\n" "$1"
+        printf "Please move or delete '%s'\n" "$1"
+        exit 8
+    fi
 }
 
 ARGS="$(getopt --options h, --long help -- "$@")"
