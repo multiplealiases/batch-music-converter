@@ -69,6 +69,10 @@ EOF
     fi
 }
 
+function cleanup() {
+    rm "$input_filelist" "$output_filelist" "$dirlist"
+}
+
 ARGS="$(getopt --options h, --long help -- "$@")"
 eval set -- "$ARGS"
 while true
@@ -119,6 +123,8 @@ strip="${strip:-1}"
 input_filelist="$(mktemp)"
 output_filelist="$(mktemp)"
 dirlist="$(mktemp)"
+
+trap 'cleanup' ERR EXIT
 
 find "$input_prefix" -type f -print0 > "$input_filelist"
 find "$input_prefix" -type d -print0 | cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$dirlist"
