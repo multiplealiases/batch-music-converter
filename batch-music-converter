@@ -7,6 +7,25 @@ function usage() {
     echo "Usage: batch-music-converter [options] <input directory> <output directory>"
 }
 
+function banner() {
+    echo Scuffed batch music conversion tool
+}
+
+function help_text(){
+    cat << EOF
+$(banner)
+$(usage)
+
+Defaults shown in [].
+-b, --bitrate        bitrate to convert to [196k]
+-c, --codec          codec to convert to [libopus]
+-e, --extension      file extension [ogg]
+-j, --jobs           number of parallel processes [$(nproc)]
+-p, --strip          strip this many path components [1]
+-h, --help           this help
+EOF
+}
+
 function valid_dir() {
     if [[ $# -lt 1 ]]
     then
