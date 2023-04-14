@@ -139,7 +139,7 @@ find "$input_prefix" -type d -print0 | cut -zd / -f "$(( 1 + strip ))"- | xargs 
 if [[ $interactive == 'y' ]]
 then
     echo 'Your converted music will reside in locations like:'
-    shuf --echo -zn 5 < "$output_filelist"
+    parallel -0 echo \{.\}."$extension" :::: <(shuf -zn 5 "$output_filelist")
     read -rp "Would you like to proceed? (y/N)" response
 
     case "$response" in
