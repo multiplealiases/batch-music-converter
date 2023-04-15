@@ -132,7 +132,7 @@ dirlist="$(mktemp)"
 
 trap 'cleanup' ERR EXIT
 
-find "$input_prefix" -type f -print0 > "$input_filelist"
+find "$input_prefix" -type f -regextype posix-extended -iregex '.*\.(mp3|aac|mkv|opus|ogg|mp4|m4a|flac|wav|au|mp2|webm|aiff|aif|wma|alac|oga)' -print0 > "$input_filelist"
 < "$input_filelist" cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$output_filelist"
 find "$input_prefix" -type d -print0 | cut -zd / -f "$(( 1 + strip ))"- | xargs -I{} -0 printf '%s/%s\0' "$output_prefix" {} > "$dirlist"
 
