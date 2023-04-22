@@ -152,5 +152,5 @@ fi
 
 xargs -0 -I{} mkdir -p {} < "$dirlist"
 parallel --progress --eta -0 --link -j"$jobs" \
-ffmpeg -hide_banner -loglevel error -i {1} -c:a "$codec" -b:a "$bitrate" {2.}."$extension" \
+ffmpeg -hide_banner -loglevel error -i {1} -c:a "$codec" -b:a "$bitrate" -vn {2.}."$extension" \
 :::: "$input_filelist" :::: "$output_filelist"
